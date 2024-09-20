@@ -6,6 +6,15 @@ from groq import Groq
 groq_client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 def groq_response(prompt, temp=0):
+    """Generate a chat completion response using the Groq API.
+    
+    Args:
+        prompt (str): The user's input prompt for the chat completion.
+        temp (float, optional): The temperature parameter for controlling randomness in the response. Defaults to 0.
+    
+    Returns:
+        str: The content of the generated chat completion response.
+    """
     chat_completion = groq_client.chat.completions.create(
         messages=[
             {
