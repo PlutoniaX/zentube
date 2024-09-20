@@ -16,6 +16,20 @@ processed_dir = os.path.join(base_dir,  "experiments", "youtube","transcripts", 
         
 
 def process_all_transcripts(roast=False):
+    """Processes all transcript files in a specified directory, optionally roasting them.
+    
+    Args:
+        roast (bool, optional): If True, roasts the transcript instead of summarizing. Defaults to False.
+    
+    Returns:
+        None: This function doesn't return a value, but it produces side effects:
+            - Prints processing status messages to the console.
+            - Creates markdown files in the output directory.
+            - Moves processed JSON files to the processed directory.
+    
+    Raises:
+        Exception: If there's an error during file processing, it's caught and printed.
+    """
     try:
         print("\n\n📝 Processing transcripts...\n")
         
@@ -64,6 +78,16 @@ def process_all_transcripts(roast=False):
         print(f"🚨 Error processing files: {e}")
             
 def process_transcript(transcript, title, description):
+    """Processes a YouTube video transcript and generates a summary.
+    
+    Args:
+        transcript (str): The full transcript of the YouTube video.
+        title (str): The title of the YouTube video.
+        description (str): The description of the YouTube video.
+    
+    Returns:
+        str: A formatted markdown string containing the generated summary and the full transcript.
+    """
     print(f"\nProcessing transcript for {title}\n")
     summarizer = YouTubeSummarizer()
     
@@ -78,15 +102,46 @@ def process_transcript(transcript, title, description):
     md_data = f"""
 
 ## Summary
+"""Creates a Markdown string with frontmatter containing video metadata and summary.
+
+Args:
+    summary (str): A summary of the video content.
+    video_data (dict): A dictionary containing video metadata with keys:
+        'title', 'channel_name', 'view_count', 'publish_date', 'description',
+        'thumbnail', and 'video_url'.
+
+Returns:
+    str: A formatted Markdown string with frontmatter and video information.
+"""
 {summary}
         
 ## Transcript
 {transcript}
     """
+    Initialize a new instance of the class.
+    
+    This method initializes the object by calling the superclass's __init__ method and setting up a summarization prompt generator using dspy.ChainOfThought.
+    
+    Args:
+        None
+    
+    Returns:
+        None
+    """
+    """
     
     return md_data
 
 
+"""Generates a summarization prompt based on the given title and description.
+
+Args:
+    title (str): The title of the content to be summarized.
+    description (str): The description or content to be summarized.
+
+Returns:
+    dspy.Prediction: A prediction object containing the generated summarization prompt.
+"""
 def create_markdown_with_frontmatter(summary, video_data):
     frontmatter = f"""---
 title: "{video_data['title']}"
@@ -122,6 +177,14 @@ class YouTubeSummarizer(dspy.Module):
 
     def forward(self, title, description):
         # Create a summarization prompt
+        """Generates a markdown-formatted analysis of a video transcript, including constructive feedback and a comedic roast.
+        
+        Args:
+            video_data (dict): A dictionary containing video information and transcript data.
+        
+        Returns:
+            str: A markdown-formatted string containing video details, constructive feedback, and a comedic roast.
+        """
         summarization_prompt = self.summarization_prompt_generator(title=title, description=description)
         
         return dspy.Prediction(summarization_prompt=summarization_prompt.summarization_prompt)
