@@ -12,6 +12,18 @@ exa = Exa(api_key=exa_api_key)
 
 
 def add_videos(prompt="", num_results=10, include = None, exclude = None):
+    """
+    Searches for videos based on a given prompt and adds them to a playlist.
+    
+    Args:
+        prompt (str): The search query for finding videos. Defaults to an empty string.
+        num_results (int): The number of video results to retrieve. Defaults to 10.
+        include (list or None): List of keywords to include in the search. Defaults to None.
+        exclude (list or None): List of keywords to exclude from the search. Defaults to None.
+    
+    Returns:
+        None: This function doesn't return any value, it performs actions and prints results.
+    """
     try:
         print(f"\n🔎 Finding videos with prompt: {prompt}\n")
         results = find_videos(prompt=prompt, num_results=num_results, include=include, exclude=exclude)
@@ -30,6 +42,18 @@ def add_videos(prompt="", num_results=10, include = None, exclude = None):
 def find_videos(prompt="", num_results=10, include= None, exclude= None):
     
     # Modify the prompt if it doesn't contain "videos" or "youtube"
+    """
+    Searches for YouTube videos based on a given prompt.
+    
+    Args:
+        prompt (str): The search query for finding videos. If it doesn't contain "videos" or "youtube", it will be modified.
+        num_results (int): The number of video results to return. Defaults to 10.
+        include (str): Optional text to include in the search results.
+        exclude (str): Optional text to exclude from the search results.
+    
+    Returns:
+        list: A list of search results containing video information.
+    """
     if "videos" not in prompt.lower() and "youtube" not in prompt.lower():
         prompt = f"Find youtube videos for: {prompt}"
     
@@ -47,6 +71,14 @@ def find_videos(prompt="", num_results=10, include= None, exclude= None):
 
 
 def get_youtube_video_id(url):
+    """Extracts the YouTube video ID from a given URL.
+    
+    Args:
+        url (str): The YouTube video URL to parse.
+    
+    Returns:
+        str or None: The extracted video ID if found, or None if not found.
+    """
     parsed_url = urlparse(url)
     video_id = parse_qs(parsed_url.query).get('v')
     return video_id[0] if video_id else None
