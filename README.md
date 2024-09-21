@@ -1,4 +1,6 @@
-## Zentube Documentation
+## Zentube 
+
+Break Free from Endless YouTube Scrolling. Meet ZenTube—the AI-powered tool that finds the insights you're looking for, cutting the distractions and saving you hours. You deserve to enjoy only the best parts of each video—without the mindless rabbit holes.
 
 This documentation details the workings of Zentube, a Python-based system designed to automatically process and summarize YouTube videos. The project utilizes various APIs and libraries, including YouTube Data API, YouTube Transcript API, Exa, Groq, and dspy, for video retrieval, transcript generation, summarization, and content analysis.
 
